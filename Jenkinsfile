@@ -40,6 +40,12 @@ pipeline {
                                      string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD'),
                                      string(credentialsId: 'GCS_NAME', variable: 'GCS_NAME'),
                                      file(credentialsId: 'GCS', variable: 'GCS_PATH')]) {
+                        // 환경 변수 값 출력 (디버깅용)
+                        sh 'echo $DB_URL'
+                        sh 'echo $DB_USERNAME'
+                        sh 'echo $DB_PASSWORD'
+                        sh 'echo $GCS_NAME'
+                        sh 'echo $GCS_PATH'
                         dir('backend') {
                             // 환경 변수를 application.properties 파일에 추가
                             sh '''
