@@ -49,7 +49,7 @@ pipeline {
                                  string(credentialsId: 'DB_USERNAME', variable: 'DB_USERNAME'),
                                  string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD'),
                                  string(credentialsId: 'GCS_NAME', variable: 'GCS_NAME'),
-                                 string(credentialsId: 'GCS', variable: 'GCS')]) {
+                                 file(credentialsId: 'GCS', variable: 'GCS')]) {
                     
                             // 비밀값을 출력하지 않도록 수정
                             echo "DB_URL: [REDACTED]"
