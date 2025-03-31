@@ -8,6 +8,12 @@ pipeline {
         DOCKER_IMAGE = 'jjwon0407/gomin_jungdok:${BUILD_ID}'  // Docker 이미지  이름
         JAVA_HOME = '/usr/lib/jvm/java-17-openjdk-amd64'
         PATH = "$JAVA_HOME/bin:$PATH"
+
+        DB_URL = credentials('DB_URL')
+        DB_USERNAME = credentials('DB_USERNAME')
+        DB_PASSWORD = credentials('DB_PASSWORD')
+        GCS_NAME = credentials('GCS_NAME')
+        GCS = credentials('GCS')  
     }
     tools {
         jdk 'openjdk-17-jdk'
