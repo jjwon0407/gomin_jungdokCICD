@@ -50,15 +50,16 @@ pipeline {
                                  string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD'),
                                  string(credentialsId: 'GCS_NAME', variable: 'GCS_NAME'),
                                  string(credentialsId: 'GCS', variable: 'GCS')]) {
+                    
+                            // 비밀값을 출력하지 않도록 수정
+                            echo "DB_URL: [REDACTED]"
+                            echo "DB_USERNAME: [REDACTED]"
+                            echo "DB_PASSWORD: [REDACTED]"
+                            echo "GCS_NAME: [REDACTED]"
+                            echo "GCS: [REDACTED]"
 
-                        // 비밀값을 출력하지 않도록 수정
-                        echo "DB_URL: [REDACTED]"
-                        echo "DB_USERNAME: [REDACTED]"
-                        echo "DB_PASSWORD: [REDACTED]"
-                        echo "GCS_NAME: [REDACTED]"
-                        echo "GCS: [REDACTED]"
-
-                        sh './gradlew clean build' // backend 디렉토리에서 JAR 파일 빌드
+                            sh './gradlew clean build' // backend 디렉토리에서 JAR 파일 빌드
+                        }
                     }
                 }
             }
