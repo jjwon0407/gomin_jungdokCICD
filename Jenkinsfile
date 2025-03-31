@@ -44,22 +44,10 @@ pipeline {
                         sh 'echo $JAVA_HOME'  // JAVA_HOME을 출력
                         sh 'java -version'    
 
-                        // withCredentials 블록을 사용하여 비밀값을 안전하게 처리
-                        withCredentials([string(credentialsId: 'DB_URL', variable: 'DB_URL'),
-                                 string(credentialsId: 'DB_USERNAME', variable: 'DB_USERNAME'),
-                                 string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD'),
-                                 string(credentialsId: 'GCS_NAME', variable: 'GCS_NAME'),
-                                 file(credentialsId: 'GCS', variable: 'GCS')]) {
-                    
-                            // 비밀값을 출력하지 않도록 수정
-                            echo "DB_URL: [REDACTED]"
-                            echo "DB_USERNAME: [REDACTED]"
-                            echo "DB_PASSWORD: [REDACTED]"
-                            echo "GCS_NAME: [REDACTED]"
-                            echo "GCS: [REDACTED]"
+                        echo "DB_URL: ${DB_URL}"
+                        echo "DB_USERNAME: ${DB_USERNAME}"
 
-                            sh './gradlew clean build' // backend 디렉토리에서 JAR 파일 빌드
-                        }
+                        sh './gradlew clean build' // backend 디렉토리에서 JAR 파일 빌드
                     }
                 }
             }
