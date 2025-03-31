@@ -40,23 +40,22 @@ pipeline {
                                      string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD'),
                                      string(credentialsId: 'GCS_NAME', variable: 'GCS_NAME'),
                                      file(credentialsId: 'GCS', variable: 'GCS_PATH')]) {
-                        // 환경 변수 값 출력 (디버깅용)
-                        sh 'echo $DB_URL'
-                        sh 'echo $DB_USERNAME'
-                        sh 'echo $DB_PASSWORD'
-                        sh 'echo $GCS_NAME'
-                        sh 'echo $GCS_PATH'
+                        
                         dir('backend') {
-                            // 환경 변수를 application.properties 파일에 추가
                             sh '''
-                                echo "spring.datasource.url=$DB_URL" >> src/main/resources/application.properties
-                                echo "spring.datasource.username=$DB_USERNAME" >> src/main/resources/application.properties
-                                echo "spring.datasource.password=$DB_PASSWORD" >> src/main/resources/application.properties
-                                echo "spring.cloud.gcp.storage.bucket=$GCS_NAME" >> src/main/resources/application.properties
-                                echo "spring.cloud.gcp.storage.credentials.location=$GCS_PATH" >> src/main/resources/application.properties
+                                echo "Using DB_URL=$DB_URL"
+                                echo "Using DB_USERNAME=$DB_USERNAME"
+                                echo "Using DB_PASSWORD=$DB_PASSWORD"
+                                echo "Using GCS_NAME=$GCS_NAME"
+                                echo "Using GCS_PATH=$GCS_PATH"
+
+                                ./gradlew clean build \
+                                -Dspring.datasource.url=$DB_URL \
+                                -Dspring.datasource.username=$DB_USERNAME \
+                                -Dspring.datasource.password=$DB_PASSWORD \
+                                -Dspring.cloud.gcp.storage.bucket=$GCS_NAME \
+                                -Dspring.cloud.gcp.storage.credentials.location=$GCS_PATH
                             '''
-                            // JAR 빌드 실행
-                            sh './gradlew clean build'
                         }
                     }
                 }
