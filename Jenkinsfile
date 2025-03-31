@@ -32,7 +32,8 @@ pipeline {
             }
         }
         stage('Build JAR') {
-            script {
+            steps {
+                script {
                     // credentials 환경 변수를 사용하여 application.properties 파일을 업데이트
                     withCredentials([string(credentialsId: 'DB_URL', variable: 'DB_URL'),
                                      string(credentialsId: 'DB_USERNAME', variable: 'DB_USERNAME'),
@@ -53,6 +54,7 @@ pipeline {
                         }
                     }
                 }
+            }
         }
         stage('Verify JAR File') {
             steps {
