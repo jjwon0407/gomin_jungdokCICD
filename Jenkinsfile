@@ -40,7 +40,15 @@ pipeline {
                                      string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD'),
                                      string(credentialsId: 'GCS_NAME', variable: 'GCS_NAME'),
                                      file(credentialsId: 'GCS', variable: 'GCS_PATH')]) {
-                        
+                        sh '''
+                            echo "DB_URL: $DB_URL"
+                            echo "DB_USERNAME: $DB_USERNAME"
+                            echo "DB_PASSWORD: [HIDDEN]"
+                            echo "GCS_NAME: $GCS_NAME"
+                            echo "GCS_PATH: $GCS_PATH"
+                        '''
+
+
                         dir('backend') {
                             sh '''
                                 echo "Using DB_URL=$DB_URL"
