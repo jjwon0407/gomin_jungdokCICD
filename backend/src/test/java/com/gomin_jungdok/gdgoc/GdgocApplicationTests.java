@@ -2,6 +2,8 @@ package com.gomin_jungdok.gdgoc;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
+
 
 @TestPropertySource(properties = {
     "spring.datasource.url=${DB_URL}",
