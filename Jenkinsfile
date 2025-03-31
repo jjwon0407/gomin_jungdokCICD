@@ -43,6 +43,14 @@ pipeline {
                      dir('backend') {
                         sh 'echo $JAVA_HOME'  // JAVA_HOME을 출력
                         sh 'java -version'    
+
+                        echo "DB_URL: ${DB_URL}"
+                        echo "DB_USERNAME: ${DB_USERNAME}"
+                        echo "DB_PASSWORD: ${DB_PASSWORD}"
+                        echo "GCS_NAME: ${GCS_NAME}"
+                        echo "GCS: ${GCS}"
+
+
                         sh './gradlew clean build' // backend 디렉토리에서 JAR 파일 빌드
                     }
                 }
