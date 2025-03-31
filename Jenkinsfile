@@ -8,12 +8,6 @@ pipeline {
         DOCKER_IMAGE = 'jjwon0407/gomin_jungdok:${BUILD_ID}'  // Docker 이미지  이름
         JAVA_HOME = '/usr/lib/jvm/java-17-openjdk-amd64'
         PATH = "$JAVA_HOME/bin:$PATH"
-
-        DB_URL = credentials('DB_URL')
-        DB_USERNAME = credentials('DB_USERNAME')
-        DB_PASSWORD = credentials('DB_PASSWORD')
-        GCS_NAME = credentials('GCS_NAME')
-        GCS = credentials('GCS')  
     }
     tools {
         jdk 'openjdk-17-jdk'
@@ -38,19 +32,27 @@ pipeline {
             }
         }
         stage('Build JAR') {
-            steps {
-                script {
-                     dir('backend') {
-                        sh 'echo $JAVA_HOME'  // JAVA_HOME을 출력
-                        sh 'java -version'    
-
-                        echo "DB_URL: ${DB_URL}"
-                        echo "DB_USERNAME: ${DB_USERNAME}"
-
-                        sh './gradlew clean build' // backend 디렉토리에서 JAR 파일 빌드
+            script {
+                    // credentials 환경 변수를 사용하여 application.properties 파일을 업데이트
+                    withCredentials([string(credentialsId: 'DB_URL', variable: 'DB_URL'),
+                                     string(credentialsId: 'DB_USERNAME', variable: 'DB_USERNAME'),
+                                     string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD'),
+                                     string(credentialsId: 'GCS_NAME', variable: 'GCS_NAME'),
+                                     file(credentialsId: 'GCS', variable: 'GCS_PATH')]) {
+                        dir('backend') {
+                            // 환경 변수를 application.properties 파일에 추가
+                            sh '''
+                                echo "spring.datasource.url=$DB_URL" >> src/main/resources/application.properties
+                                echo "spring.datasource.username=$DB_USERNAME" >> src/main/resources/application.properties
+                                echo "spring.datasource.password=$DB_PASSWORD" >> src/main/resources/application.properties
+                                echo "spring.cloud.gcp.storage.bucket=$GCS_NAME" >> src/main/resources/application.properties
+                                echo "spring.cloud.gcp.storage.credentials.location=$GCS_PATH" >> src/main/resources/application.properties
+                            '''
+                            // JAR 빌드 실행
+                            sh './gradlew clean build'
+                        }
                     }
                 }
-            }
         }
         stage('Verify JAR File') {
             steps {
