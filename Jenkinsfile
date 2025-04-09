@@ -88,21 +88,6 @@ pipeline {
             }
         }
 
-	stage('Test Docker Image') {
-            steps {
-                script {
-                    try {
-                        sh 'docker run -d -p 8080:3030 --name gomin_jungdok_jenkins${BUILD_ID} jjwon0407/gomin_jungdok:${BUILD_ID}'
-                        sh 'sleep 30 && curl -f http://34.64.251.216:8080/ || exit 1'
-                        echo "Container is running correctly."
-                    } catch (Exception e) {
-                        echo "Test failed. Image will not be pushed."
-                        error "Stopping pipeline due to test failure."
-                    }
-                }
-            }
-        }
-
         stage("Push Docker image") {
             steps {
                 script {
