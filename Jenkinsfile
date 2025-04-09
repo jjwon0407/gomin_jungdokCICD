@@ -83,7 +83,7 @@ pipeline {
             steps {
                 script {
                     // Docker 이미지를 빌드합니다.
-                    sh "docker build -t jjwon0407/gomin_jungdok:${BUILD_ID} ."
+                    myapp = docker.build("jjwon0407/gomin_jungdok:${env.BUILD_ID}")
                 }
             }
         }
@@ -92,8 +92,9 @@ pipeline {
             steps {
                 script {
                     // Docker Hub에 이미지를 푸시합니다.
-                    withDockerRegistry([credentialsId: 'dockerHub', url: 'https://registry.hub.docker.com']) {
-                        sh "docker push jjwon0407/gomin_jungdok:${BUILD_ID}"
+                    docker.withRegistry('https://registry.hub.docker.com', 'jjwon0407') {
+                            myapp.push("latest")
+                            myapp.push("${env.BUILD_ID}")
                     }
                 }
             }
