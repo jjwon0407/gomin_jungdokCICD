@@ -55,9 +55,9 @@ spec:
             memory: "128Mi"
             cpu: "500m"
       volumes:
-      - name: gomin-jungdok-secret
+      - name: gcs-config-volume
         secret:
-          secretName: gomin-gcs-secret
+          secretName: gcs-config
 
 ---
 apiVersion: v1
