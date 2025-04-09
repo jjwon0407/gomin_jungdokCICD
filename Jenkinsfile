@@ -92,7 +92,7 @@ pipeline {
             steps {
                 script {
                     // Docker Hub에 이미지를 푸시합니다.
-                    docker.withRegistry('https://registry.hub.docker.com', 'jjwon0407') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerHub') {
                             myapp.push("latest")
                             myapp.push("${env.BUILD_ID}")
                     }
