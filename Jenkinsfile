@@ -63,7 +63,7 @@ pipeline {
                                 -Dspring.datasource.username=$DB_USERNAME \
                                 -Dspring.datasource.password=$DB_PASSWORD \
                                 -Dspring.cloud.gcp.storage.bucket=$GCS_NAME \
-                                -Dspring.cloud.gcp.storage.credentials.location=$GCS_PATH
+                                -Dspring.cloud.gcp.storage.credentials.location=$GCS_PATH \
                                 -Dspring.test.env=true
                             '''
                         }
