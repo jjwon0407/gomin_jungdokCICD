@@ -39,7 +39,7 @@ spec:
         - name: GCS_NAME
           valueFrom:
             secretKeyRef:
-              name: gomin-jungdok-secret.yaml
+              name: gomin-jungdok-secret
               key: gcs-name
         - name: GCS
           value: /etc/secrets/gcs.json
@@ -55,7 +55,7 @@ spec:
             memory: "128Mi"
             cpu: "500m"
       volumes:
-      - name: gcs-secret
+      - name: gomin-jungdok-secret
         secret:
           secretName: gomin-gcs-secret
 
