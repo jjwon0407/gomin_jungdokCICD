@@ -83,7 +83,7 @@ pipeline {
             steps {
                 script {
                     // Docker 이미지를 빌드합니다.
-                    myapp = docker.build("jjwon0407/gomin_jungdok:${env.BUILD_ID}")
+                    myapp = docker.build("jjwon0407/gomin_jungdok:${env.BUILD_ID}", "--no-cache")
                 }
             }
         }
