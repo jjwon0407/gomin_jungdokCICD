@@ -5,7 +5,7 @@ metadata:
   labels:
     app: gomin-jungdok
 spec:
-  replicas: 3 # 파드 복제본 수
+  replicas: 3
   selector:
     matchLabels:
       app: gomin-jungdok
@@ -16,17 +16,48 @@ spec:
     spec:
       containers:
       - name: noguet-container
-        image: jjwon0407/gomin_jungdok:latest # 사용하는 Docker 이미지
+        image: jjwon0407/gomin_jungdok:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 3030 # 컨테이너 내부에서 사용하는 포트
-        resources: # 리소스 요청 및 제한 (옵션)
+        - containerPort: 3030
+        env:
+        - name: DB_URL
+          valueFrom:
+            secretKeyRef:
+              name: gomin-jungdok-secret
+              key: db-url
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: gomin-jungdok-secret
+              key: db-username
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: gomin-jungdok-secret
+              key: db-password
+        - name: GCS_NAME
+          valueFrom:
+            secretKeyRef:
+              name: gomin-jungdok-secret.yaml
+              key: gcs-name
+        - name: GCS
+          value: /etc/secrets/gcs.json
+        volumeMounts:
+        - name: gcs-config-volume
+          mountPath: /etc/secrets/
+          readOnly: true
+        resources:
           requests:
             memory: "64Mi"
             cpu: "250m"
           limits:
             memory: "128Mi"
             cpu: "500m"
+      volumes:
+      - name: gcs-secret
+        secret:
+          secretName: gomin-gcs-secret
 
 ---
 apiVersion: v1
@@ -38,8 +69,8 @@ metadata:
 spec:
   selector:
     app: gomin-jungdok
-  type: LoadBalancer # 외부에서 접근 가능하도록 설정
+  type: LoadBalancer
   ports:
   - protocol: TCP
-    port: 8080 # 외부에서 노출할 포트
-    targetPort: 3030 # 컨테이너 내부 포트
+    port: 8080
+    targetPort: 3030
