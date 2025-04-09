@@ -92,7 +92,7 @@ pipeline {
             steps {
                 script {
                     // Docker Hub에 이미지를 푸시합니다.
-                    withDockerRegistry([credentialsId: 'jjwon0407', url: 'https://registry.hub.docker.com']) {
+                    withDockerRegistry([credentialsId: 'dockerHub', url: 'https://registry.hub.docker.com']) {
                         sh "docker push jjwon0407/gomin_jungdok:${BUILD_ID}"
                     }
                 }
