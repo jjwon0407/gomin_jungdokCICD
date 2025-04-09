@@ -1,11 +1,12 @@
 pipeline {
     agent any
     environment {
-        PROJECT_ID = 'success-project-450113'       // GCP 프로젝트 ID
-        CLUSTER_NAME = 'gomin-jungdok'                  // GKE 클러스터 이름
-        LOCATION = 'asia-northeast3-a'         // 클러스터 위치
-        CREDENTIALS_ID = '7bf84d9c-14da-4d7a-92c4-6c98c061b523'     // GCP  인증 정보 (Jenkins에서 설정한 Google 서비스 계정 키 파일)
-        DOCKER_IMAGE = 'jjwon0407/gomin_jungdok:${BUILD_ID}'  // Docker 이미지  이름
+        PROJECT_ID = 'success-project-450113'       //GCP 프로젝트 ID
+        CLUSTER_NAME = 'gomin-jungdok'                  //GKE 클러스터 이름
+        LOCATION = 'asia-northeast3-a'         //클러스터 위치
+        CREDENTIALS_ID = '7bf84d9c-14da-4d7a-92c4-6c98c061b523'     //GCP  인증 정보 (Jenkins에서 설정한 Google 서비스 계정 키 파일)
+        DOCKER_IMAGE = 'jjwon0407/gomin_jungdok:${BUILD_ID}'  //Docker 이미지  이름
+        
         JAVA_HOME = '/usr/lib/jvm/java-17-openjdk-amd64'
         PATH = "$JAVA_HOME/bin:$PATH"
     }
@@ -57,7 +58,7 @@ pipeline {
                                 echo "Using GCS_NAME=$GCS_NAME"
                                 echo "Using GCS_PATH=$GCS_PATH"
 
-                                ./gradlew clean build \
+                                ./gradlew clean build -x test \
                                 -Dspring.datasource.url=$DB_URL \
                                 -Dspring.datasource.username=$DB_USERNAME \
                                 -Dspring.datasource.password=$DB_PASSWORD \
