@@ -106,7 +106,7 @@ pipeline {
 		    }
 		    steps {
                 script {
-                    sh "sed -i 's/jjwon0407\\/gomin_jungdok:latest/jjwon0407\\/gomin_jungdok:${BUILD_ID}/g' deployment.yaml"
+                    sh "sed -i 's/gomin_jungdok:latest/gomin_jungdok:${BUILD_ID}/g' deployment.yaml"
                     // 배포 전에 deployment.yaml 파일의 이미지를 최신 빌드 ID로 교체합니다.	
 
                     // Kubernetes Engine에 배포합니다.
@@ -117,15 +117,6 @@ pipeline {
                           manifestPattern: 'deployment.yaml',
                           credentialsId: env.CREDENTIALS_ID,
                           verifyDeployments: true])
-                }
-            }
-        }
-
-        stage('Verify Kubernetes Deployment') {
-            steps {
-                script {
-                    // 배포 후 애플리케이션 상태 확인 (Pod 상태 체크)
-                    sh "kubectl get pods -l app=gomin-jungdok"
                 }
             }
         }
