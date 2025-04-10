@@ -60,10 +60,10 @@ spec:
           value: /etc/secrets/gcs.json
         volumeMounts:
         - name: gcs-config-volume
-          mountPath: /etc/secrets/
+          mountPath: /etc/secrets/gcs
           readOnly: true
         - name: firebase-config-volume
-          mountPath: /etc/secrets/
+          mountPath: /etc/secrets/firebase
           readOnly: true
         resources:
           requests:
