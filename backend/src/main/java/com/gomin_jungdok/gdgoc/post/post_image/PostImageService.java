@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,7 @@ public class PostImageService {
     @Value("${spring.cloud.gcp.storage.bucket}")
     private String bucketName;
 
+    @Autowired
     public PostImageService(PostImageRepository postImageRepository) {
         this.storage = StorageOptions.getDefaultInstance().getService();
         this.postImageRepository = postImageRepository;
