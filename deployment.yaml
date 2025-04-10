@@ -57,7 +57,7 @@ spec:
               name: gomin-jungdok-secret
               key: custom-jwt-secretKey
         - name: GCS
-          value: /etc/secrets/gcs.json
+          value: /etc/secrets/gcs/gcs.json
         volumeMounts:
         - name: gcs-config-volume
           mountPath: /etc/secrets/gcs
