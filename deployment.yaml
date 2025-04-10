@@ -62,7 +62,6 @@ spec:
         - name: gcs-config-volume
           mountPath: /etc/secrets/
           readOnly: true
-        volumeMounts:
         - name: firebase-config-volume
           mountPath: /etc/secrets/
           readOnly: true
@@ -77,7 +76,7 @@ spec:
       - name: gcs-config-volume
         secret:
           secretName: gcs-config
-      - name: irebase-config-volume
+      - name: firebase-config-volume
         secret:
           secretName: firebase-config 
 
