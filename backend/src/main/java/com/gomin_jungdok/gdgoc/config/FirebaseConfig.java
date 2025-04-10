@@ -13,13 +13,16 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+
+
 @Configuration
 public class FirebaseConfig {
+    @Value("${firebase.config.path}")
+    private String firebaseConfigPath;
 
     @Bean
     public FirebaseApp initializeFirebase() throws IOException {
-        InputStream serviceAccount =
-                new ClassPathResource("gominjungdok-16bbd-firebase-adminsdk-fbsvc-12d2530b76.json").getInputStream(); // 다운로드한 서비스 계정 JSON 경로
+        FileInputStream serviceAccount = new FileInputStream(firebaseConfigPath); //외부 경로 읽기
 
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
