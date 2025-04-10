@@ -41,6 +41,21 @@ spec:
             secretKeyRef:
               name: gomin-jungdok-secret
               key: gcs-name
+        - name: kakao.client
+          valueFrom: 
+            secretKeyRef: 
+              name: gomin-jungdok-secret
+              key: kakao-client
+        - name: kakao.redirect-uri 
+          valueFrom:  
+            secretKeyRef:
+              name: gomin-jungdok-secret
+              key: kakao-redirect-uri
+        - name: custom.jwt.secretKey
+          valueFrom: 
+            secretKeyRef:
+              name: gomin-jungdok-secret
+              key: custom-jwt-ecretKey
         - name: GCS
           value: /etc/secrets/gcs.json
         volumeMounts:
